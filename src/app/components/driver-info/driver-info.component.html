@@ -1,0 +1,24 @@
+<ion-card [hidden]="!isPickupRequested || !isPopupShowed">
+    <!-- <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle> -->
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="closePopup()">
+            <ion-icon name="close-outline" color="dark"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        
+        <ion-title>Driver Info</ion-title>
+        <!-- <ion-label>{{(showDriverInfo()).nombre}}</ion-label> -->
+      </ion-toolbar>
+    </ion-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="{{(showDriverInfo()).imgURL}}">
+        </ion-avatar>
+        <ion-label position="inline">{{(showDriverInfo()).nombre}}</ion-label>
+      </ion-item>
+      
+    </ion-card-content>
+</ion-card>

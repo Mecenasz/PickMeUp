@@ -1,5 +1,7 @@
 {
   "name": "PickMeUp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

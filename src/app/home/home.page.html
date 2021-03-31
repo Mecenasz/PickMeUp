@@ -1,20 +1,78 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button [hidden]="!isPickupRequested" (click)="cancelPickUp()">
+        <ion-icon name="arrow-back" color="dark"></ion-icon>
+        Cancel
+      </ion-button>
+    </ion-buttons>
     <ion-title>
-      Blank
+      <span [hidden]="isPickupRequested">PickMeUp</span>
+      <span [hidden]="!isPickupRequested">On the way...</span>
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="map.centerLocation()">
+        <ion-icon ion-icon name="navigate" color="dark"></ion-icon>
+        
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="home">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="map-wrapper">
+    <app-map 
+    #map 
+    [isPickupRequested]="isPickupRequested"
+    [destination]="destination">
+    </app-map>
+    <destination-address
+    [hidden]="!isRiderPickedUp"
+    (newDest)="setDestination($event)">
+    </destination-address>
+  </div>
+
+  
+  
+  <div class="bottom request-controls">
+    <driver-info #driverInfo
+    [isPickupRequested]="isPickupRequested">
+    </driver-info>
+    <!-- <ion-button expand="block" color="light" [hidden]="!isPickupRequested || !ispoppedUp" (click)="closePopup()">
+      
+    </ion-button>
+    <ion-button [hidden]="!isPickupRequested || ispoppedUp" (click)="openPopup()" expand="block" color="light">
+      <ion-icon name="chevron-up-outline"></ion-icon>
+    </ion-button> -->
+    <ion-row>
+      <ion-col width-50>
+        <ion-button expand="block" color="light">
+          <ion-icon name="card"></ion-icon>
+          Visa **34
+        </ion-button>
+      </ion-col>
+      <ion-col width-50>
+        <ion-button expand="block" color="light">
+          <ion-icon name="cash"></ion-icon>
+          Cash
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button [hidden]="isPickupRequested" (click)="confirmPickUp()" expand="block" color="dark">
+          Request Pickup
+        </ion-button>
+        <ion-button [hidden]="!isPickupRequested" (click)="cancelPickUp()" expand="block" color="warning">
+          Cancel Pickup
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        PICKUP TIME IS APPROXIMATELY {{timeTillArrival}} MIN
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>
