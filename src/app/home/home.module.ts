@@ -7,6 +7,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { DestinationAddressComponent } from "../components/destination-address/destination-address.component";
 import { MapModule } from "../components/map/map.module";
 import { DriverInfoComponent } from "../components/driver-info/driver-info.component";
+import { PriceComponent } from "../components/price/price.component";
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { DriverInfoComponent } from "../components/driver-info/driver-info.compo
     HomePageRoutingModule,
     MapModule
   ],
-  declarations: [HomePage, DestinationAddressComponent, DriverInfoComponent]
+  declarations: [HomePage, DestinationAddressComponent, DriverInfoComponent, PriceComponent]
 })
 export class HomePageModule {}

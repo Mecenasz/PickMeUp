@@ -36,6 +36,7 @@ export class CarService {
   }
 
   findPickupCar(pickupLocation) {
+    // return this.simulate.findPickupCar(pickupLocation);
     return this.simulate.findPickupCar(pickupLocation);
   }
 

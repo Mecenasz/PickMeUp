@@ -1,7 +1,7 @@
-import { Component, ViewChild} from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { DriverInfoComponent } from '../components/driver-info/driver-info.component';
 import { PickupPubSubService } from "../services/pickupPubSub/pickup-pub-sub.service";
+
 
 @Component({
   selector: 'app-home',
@@ -9,16 +9,12 @@ import { PickupPubSubService } from "../services/pickupPubSub/pickup-pub-sub.ser
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
-  @ViewChild('driver-info') driverInfo: DriverInfoComponent;
-  
   public isPickupRequested: boolean;
   public pickupSubscription: any;
   public isRiderPickedUp: boolean;
   public timeTillArrival: number;
   public destination: String;
   public isPopupShowed: boolean;
-  
 
   constructor(
     private pickupPubSub: PickupPubSubService,
@@ -90,8 +86,9 @@ export class HomePage {
     this.rateDriver();
     this.isRiderPickedUp = false;
     this.isPickupRequested = false;
-    this.destination = null
+    this.destination = null;
     this.timeTillArrival = 5;
+
   }
 
   updateArrivalTime(seconds) {
@@ -102,10 +99,11 @@ export class HomePage {
 
   confirmPickUp() {
     this.isPickupRequested = true;
-    this.driverInfo.showPopup();
   }
 
   cancelPickUp() {
     this.isPickupRequested = false;
+    this.destination = null;
+    this.isRiderPickedUp = false;
   }
 }

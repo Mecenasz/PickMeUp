@@ -35,12 +35,10 @@ export class DriverInfoComponent implements OnInit {
     this.driverInfo = this.carService.getPickupCarDriverInfo();
     return this.driverInfo;
   }
-  showPopup() {
+  showPopup() {    
     this.isPopupShowed = true;
   }
-  closePopup() {
-    console.log('hola');
-    
+  closePopup() {    
     this.isPopupShowed = false;
   }
 }

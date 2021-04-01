@@ -42,7 +42,7 @@ export class AvailableCarsComponent implements OnInit {
     let carMarker = new google.maps.Marker({
       map: this.map,
       position: new google.maps.LatLng(car.coord.lat, car.coord.lng),
-      icon: {url: 'person-icon1.png'}
+      // icon: {url: 'person-icon1.png'}
     });
 
     carMarker.set('id', car.id); //MVCObject()

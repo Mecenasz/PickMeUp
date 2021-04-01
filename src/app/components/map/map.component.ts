@@ -1,8 +1,9 @@
 /// <reference types="@types/googlemaps" />
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Observable } from 'rxjs';
 import { CarService } from "../../services/car/car.service";
+import { PickupCarComponent } from '../pickup-car/pickup-car.component';
 
 @Component({
   selector: 'app-map',
@@ -11,8 +12,10 @@ import { CarService } from "../../services/car/car.service";
   providers: [CarService]
 })
 export class MapComponent implements OnInit {
+  @ViewChild('pickupCar') pickupCar: ElementRef;  
   @Input() isPickupRequested: boolean;
   @Input() destination: string;
+  @Input() isRiderPickedUp: boolean;
 
   public mapData: google.maps.Map;
   public isMapIdle: boolean;
@@ -21,8 +24,11 @@ export class MapComponent implements OnInit {
   constructor(
     private geolocation: Geolocation
   ) { }
-
+  ionViewDidLoad() {
+    this.pickupCar.nativeElement;
+  }
   async ngOnInit() {
+    console.log(this.pickupCar);
        
     this.createMap();
     this.addMapEventListeners();

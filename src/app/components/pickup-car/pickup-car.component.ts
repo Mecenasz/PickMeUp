@@ -1,5 +1,5 @@
 /// <reference types="@types/googlemaps" />
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { PickupPubSubService } from 'src/app/services/pickupPubSub/pickup-pub-sub.service';
 import { CarService } from "../../services/car/car.service";
 
@@ -13,25 +13,30 @@ export class PickupCarComponent {
   @Input() isPickupRequested: boolean;
   @Input() pickupLocation: google.maps.LatLng
   @Input() destination: string;
+  @Input() isRiderPickedUp: boolean;
   public pickupCarMarker: google.maps.Marker;
   public polylinePath: google.maps.Polyline;
+  public isCarReady: boolean;
 
   constructor(
     public carService: CarService,
     private pickupPubSub: PickupPubSubService,
-  ) { }
+
+  ) { 
+    this.isCarReady = false;
+  }
 
   ngOnChanges() {
-    console.log('pickcarmarker', this.pickupCarMarker);
-    
-    if (this.destination) {
+    if (this.isRiderPickedUp) {
       this.dropoffCar();
     }
     else {
-      if (this.isPickupRequested) {
+      if (this.isPickupRequested && !this.isCarReady) {
         // request car
+        // this.isCarReady = true;
+        // this.toggle.emit(this.isCarReady);
         this.requestCar();
-        
+        // this.isCarReady = true;
       }
       else {
         //remove/cancel car
@@ -39,19 +44,18 @@ export class PickupCarComponent {
         this.removeCarDirections();
       }
     }
-    
   }
 
   addCarMarker(position) {
     this.pickupCarMarker = new google.maps.Marker({
       map: this.map,
       position: position,
-      icon: 'person-icon1.png'
+      // icon: 'person-icon1.png'
     });
+    console.log('addcarmarker',this.pickupCarMarker);
+    
   }
   
-  
-
   showDirections(path) {
     this.polylinePath = new google.maps.Polyline({
       path: path,
@@ -62,13 +66,13 @@ export class PickupCarComponent {
   }
 
   updateCar(cbDone) {
-    this.carService.getPickcupCar().subscribe(car => {
+    this.carService.getPickcupCar().subscribe(async car => {
+      console.log('car', car);
       // animate car to next point
-      console.log('jola');
+      await this.pickupCarMarker.setPosition(car.position);
+      console.log(car);
       
-      // this.pickupCarMarker.setPosition(car.position);
       // set direction path for car
-      console.log('jola2');
       this.polylinePath.setPath(car.path);
       // update arrival time
       this.pickupPubSub.emitArrivalTime(car.time);
@@ -132,4 +136,3 @@ export class PickupCarComponent {
     }
   }
 }
-

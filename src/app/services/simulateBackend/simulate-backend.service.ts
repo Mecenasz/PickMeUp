@@ -32,7 +32,10 @@ export class SimulateBackendService {
   getPickupCar() { 
     return Observable.create(observable => {
       let car = this.myRoute[this.myRouteIndex]
+      console.log('myrouteindex', this.myRouteIndex);
+      console.log('myroute', this.myRoute);
       observable.next(car)
+      console.log('getpickupcar', car);
       this.myRouteIndex++;
     })
   }
@@ -157,7 +160,7 @@ export class SimulateBackendService {
       },
       driver: {
         nombre: "Johan Sebastian Bach",
-        imgURL: "https://upload.wikimedia.org/wikipedia/commons/1/1e/Wolfgang-amadeus-mozart_1.jpg"
+        imgURL: "https://oae.co.uk/wp-content/uploads/2019/09/Johann_Sebastian_Bach-750x495.jpg"
       }
     }]
   };
@@ -171,7 +174,7 @@ export class SimulateBackendService {
       },
       driver: {
         nombre: "Ludwig Van Beethoven",
-        imgURL: "http://sites.coloradocollege.edu/musicengraving/files/2015/02/beethoven.jpg"
+        imgURL: "https://leiter.files.wordpress.com/2009/04/beethoven-hornemann.jpg"
       }
     },
     {

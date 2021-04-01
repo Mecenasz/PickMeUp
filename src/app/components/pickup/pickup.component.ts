@@ -15,6 +15,7 @@ export class PickupComponent implements OnInit, OnChanges {
   @Input() map: google.maps.Map;
   @Input() isPickupRequested: boolean;
   @Input() destination: string;
+  @Input() isRiderPickedUp: boolean;
   @Output() updatedPickupLocation: EventEmitter<google.maps.LatLng> = new EventEmitter();
 
   private pickupMarker: google.maps.Marker;
@@ -46,12 +47,14 @@ export class PickupComponent implements OnInit, OnChanges {
         this.removePickupMarker();
       }
     }
-    if (this.destination) {
+    if (this.isRiderPickedUp) {
       this.removePickupMarker();
     }
   }
 
   async showPickupMarker() {
+
+    this.removePickupMarker();
     
     this.pickupMarker = new google.maps.Marker({
       map: this.map,

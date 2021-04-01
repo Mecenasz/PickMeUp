@@ -11,11 +11,13 @@ export class DestinationAddressComponent {
   public enteredAddress: string;
   public geocoder: google.maps.Geocoder;
   public results: Array<any>;
+  public isDestinationSet: boolean;
 
   constructor() {
     this.enteredAddress = "";
     this.geocoder = new google.maps.Geocoder();
     this.results = [];
+    this.isDestinationSet;
   }
 
   onSubmit() {
@@ -31,10 +33,11 @@ export class DestinationAddressComponent {
     });
   }
 
-  selectDestination(destination) {
+  selectDestination(destination) {    
     this.results = [];
     this.enteredAddress = destination.formatted_address;
     // pass the destination lat/lng to the parent
     this.newDest.next(destination.geometry.location);
+    this.isDestinationSet = true;
   }
 }

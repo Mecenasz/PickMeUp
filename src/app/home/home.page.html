@@ -25,27 +25,42 @@
     <app-map 
     #map 
     [isPickupRequested]="isPickupRequested"
-    [destination]="destination">
+    [destination]="destination"
+    [isRiderPickedUp]="isRiderPickedUp">
     </app-map>
     <destination-address
-    [hidden]="!isRiderPickedUp"
+    [hidden]="isRiderPickedUp"
     (newDest)="setDestination($event)">
     </destination-address>
   </div>
 
-  
-  
   <div class="bottom request-controls">
-    <driver-info #driverInfo
-    [isPickupRequested]="isPickupRequested">
+    <price 
+    [isPickupRequested]="isPickupRequested"
+    [destination]="destination">
+    </price>
+    <driver-info
+    [isPickupRequested]="isPickupRequested"
+    [hidden]="isCarReady">
     </driver-info>
-    <!-- <ion-button expand="block" color="light" [hidden]="!isPickupRequested || !ispoppedUp" (click)="closePopup()">
-      
-    </ion-button>
-    <ion-button [hidden]="!isPickupRequested || ispoppedUp" (click)="openPopup()" expand="block" color="light">
-      <ion-icon name="chevron-up-outline"></ion-icon>
-    </ion-button> -->
-    <ion-row>
+    <ion-card [hidden]="!isCarReady">
+      <!-- <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle> -->
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Waiting For Driver...</ion-title>
+          <!-- <ion-label>{{(showDriverInfo()).nombre}}</ion-label> -->
+        </ion-toolbar>
+      </ion-header>
+      <ion-card-content>
+<!--     
+          <ion-text>
+            <h1>3000 CLP</h1>
+          </ion-text> -->
+    
+        
+      </ion-card-content>
+    </ion-card>
+    <!-- <ion-row>
       <ion-col width-50>
         <ion-button expand="block" color="light">
           <ion-icon name="card"></ion-icon>
@@ -58,10 +73,10 @@
           Cash
         </ion-button>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
     <ion-row>
       <ion-col>
-        <ion-button [hidden]="isPickupRequested" (click)="confirmPickUp()" expand="block" color="dark">
+        <ion-button [hidden]="isPickupRequested || !destination" (click)="confirmPickUp()" expand="block" color="dark">
           Request Pickup
         </ion-button>
         <ion-button [hidden]="!isPickupRequested" (click)="cancelPickUp()" expand="block" color="warning">
@@ -69,7 +84,7 @@
         </ion-button>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row [hidden]="isPickupRequested || !destination">
       <ion-col>
         PICKUP TIME IS APPROXIMATELY {{timeTillArrival}} MIN
       </ion-col>
